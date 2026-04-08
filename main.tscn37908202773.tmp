@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dxceasn7tjtmq"]
+
+[ext_resource type="PackedScene" uid="uid://cawjt85c444ub" path="res://player.tscn" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dutqaybegnaok" path="res://room.tscn" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://cixybgxauepaq" path="res://scripts/room_manager.gd" id="3_lquwl"]
+
+[node name="World" type="Node2D" unique_id=1563526700]
+
+[node name="Player" parent="." unique_id=1218268725 instance=ExtResource("1_h2yge")]
+position = Vector2(376, 224)
+
+[node name="Room" parent="." unique_id=513229185 instance=ExtResource("2_1bvp3")]
+position = Vector2(8, -1)
+
+[node name="RoomManager" type="Node2D" parent="." unique_id=1637420164 node_paths=PackedStringArray("ROOMS")]
+script = ExtResource("3_lquwl")
+ROOMS = [null]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1441443613]
+
+[node name="GUI" type="Node" parent="CanvasLayer" unique_id=707104952]
