@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://duyhm20eqh0aq"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_0xm2m"]
+
+[node name="Block" type="Node2D" unique_id=355746729]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=113148027]
+scale = Vector2(20, 20)
+texture = SubResource("CanvasTexture_0xm2m")
