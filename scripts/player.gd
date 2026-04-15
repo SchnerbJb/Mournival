@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var hp: int = 10
+@export var stamina: int = 10
 var run_speed = 350
 var animated_sprite: AnimatedSprite2D
 
@@ -32,7 +34,7 @@ func get_input() -> void:
 	else:
 		if input_direction.y > 0:
 			animation_direction = PlayerDirection.FRONT
-		elif input_direction.y > 0:
+		elif input_direction.y < 0:
 			animation_direction = PlayerDirection.BACK
 
 
