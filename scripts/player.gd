@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var current_state: PlayerState = PlayerState.IDLE
 var run_speed = 350
 var animated_sprite: AnimatedSprite2D
-@onready var Hitbox = $"Hitbox"
+@onready var hitbox = $"Hitbox"
 
 enum PlayerDirection {FRONT, BACK, SIDE_LEFT, SIDE_RIGHT, BACK34LEFT, BACK34RIGHT, FRONT34LEFT, FRONT34RIGHT}
 enum PlayerState {IDLE, WALK, START_ATTACK, ATTACKING, END_ATTACK, PARRY}
@@ -34,7 +34,6 @@ func stop_before_attack():
 
 func attack_one() -> void:
 	stop_before_attack()
-	print("Attacking")
 	animated_sprite.play(&"player_animation_b_attack")
 	var hit_box = Area2D.new()
 	add_child(hit_box)
@@ -74,9 +73,6 @@ func _physics_process(_delta) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
-	print("Player State : ", current_state)
-
-
 	if current_state != PlayerState.START_ATTACK \
 		and current_state != PlayerState.ATTACKING \
 		and current_state != PlayerState.END_ATTACK:
@@ -108,13 +104,13 @@ func _process(_delta: float) -> void:
 	
 	match current_state:
 		PlayerState.ATTACKING:
-			Hitbox.set_deferred("Disabled", false)
+			hitbox.monitoring = true
 		PlayerState.END_ATTACK:
-			Hitbox.set_deferred("Disabled", true)
+			hitbox.monitoring = false
+
 
 func _on_player_sprite_start_hit_frames() -> void:
 	current_state = PlayerState.ATTACKING
-
 
 func _on_player_sprite_start_recovery_frames() -> void:
 	current_state = PlayerState.END_ATTACK
@@ -122,3 +118,9 @@ func _on_player_sprite_start_recovery_frames() -> void:
 
 func _on_player_sprite_animation_finished() -> void:
 	current_state = PlayerState.IDLE
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	print(body.name)
+	if body.name == "Skeleton":
+		body.queue_free()
