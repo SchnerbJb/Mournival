@@ -6,13 +6,26 @@
 [ext_resource type="Texture2D" uid="uid://brxiyrvnr2auh" path="res://assets/knight_sprites/knight_b.png" id="3_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://ba2xks1dya42e" path="res://assets/knight_sprites/knight_b34l.png" id="4_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://e080fjmmbbrj" path="res://assets/knight_sprites/knight_b34r.png" id="5_3v2ag"]
+[ext_resource type="Texture2D" uid="uid://dvdcv8vgmp0a7" path="res://assets/knight_sprites/knight_b_attack/knight_b1.png" id="6_a38lo"]
 [ext_resource type="Texture2D" uid="uid://da0prvppxke7o" path="res://assets/knight_sprites/knight_f.png" id="6_jej6c"]
+[ext_resource type="Texture2D" uid="uid://bxxdohw10ugc8" path="res://assets/knight_sprites/knight_b_attack/knight_b2.png" id="7_4ni07"]
 [ext_resource type="Texture2D" uid="uid://bjjwlrmn61hyf" path="res://assets/knight_sprites/knight_f34l.png" id="7_f1ej7"]
+[ext_resource type="Texture2D" uid="uid://dg1l1qfwy7nwe" path="res://assets/knight_sprites/knight_b_attack/knight_b3.png" id="8_l71n6"]
 [ext_resource type="Texture2D" uid="uid://fib2tyfixt4r" path="res://assets/knight_sprites/knight_f34r.png" id="8_oprun"]
+[ext_resource type="Texture2D" uid="uid://sm64c5xogq4w" path="res://assets/knight_sprites/knight_b_attack/knight_b4.png" id="9_ke2ow"]
 [ext_resource type="Texture2D" uid="uid://clvy5lhjbuwy7" path="res://assets/knight_sprites/knight_sr.png" id="10_a8ls1"]
+[ext_resource type="Texture2D" uid="uid://bs67gvrsang4l" path="res://assets/knight_sprites/knight_b_attack/knight_b5.png" id="10_ujl30"]
+[ext_resource type="Texture2D" uid="uid://bvr466quf3qe7" path="res://assets/knight_sprites/knight_b_attack/knight_b6.png" id="11_31cv2"]
+[ext_resource type="Texture2D" uid="uid://b2bprtcgbtih3" path="res://assets/knight_sprites/knight_b_attack/knight_b7.png" id="12_pf23h"]
+[ext_resource type="Texture2D" uid="uid://ch3pvsu2l0a15" path="res://assets/knight_sprites/knight_b_attack/knight_b8.png" id="13_dt7fs"]
+[ext_resource type="Texture2D" uid="uid://dkvrwagdd7m44" path="res://assets/knight_sprites/knight_b_attack/knight_b9.png" id="14_wqfne"]
+[ext_resource type="Texture2D" uid="uid://b3rvtugh57l2n" path="res://assets/knight_sprites/knight_b_attack/knight_b10.png" id="15_wnwbv"]
+[ext_resource type="Texture2D" uid="uid://dteurw8bnd7gp" path="res://assets/knight_sprites/knight_b_attack/knight_b11.png" id="16_gl8cc"]
+[ext_resource type="Texture2D" uid="uid://cbub1cae5sc7f" path="res://assets/knight_sprites/knight_b_attack/knight_b12.png" id="17_487ah"]
+[ext_resource type="Script" uid="uid://c4fskp84d0jpq" path="res://scripts/player_sprite.gd" id="23_4ni07"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
-size = Vector2(58.5, 90)
+size = Vector2(58.5, 85)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("2_qhqgy")
@@ -82,6 +95,47 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_a38lo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4ni07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_l71n6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ke2ow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ujl30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_31cv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_pf23h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_dt7fs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_wqfne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_wnwbv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_gl8cc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_487ah")
+}],
+"loop": false,
+"name": &"player_animation_b_attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("6_jej6c")
 }],
 "loop": true,
@@ -121,16 +175,29 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ni07"]
+size = Vector2(139.5, 137.5)
+
 [node name="Player" type="CharacterBody2D" unique_id=1218268725]
 motion_mode = 1
 script = ExtResource("1_onrkg")
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="." unique_id=644833293]
-position = Vector2(-5.75, -6)
+position = Vector2(-5.75, -3.5)
 shape = SubResource("RectangleShape2D_1bvp3")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=1332148133]
 scale = Vector2(0.059, 0.059)
 sprite_frames = SubResource("SpriteFrames_ur7pv")
-animation = &"player_animation_sr"
+animation = &"player_animation_b_attack"
 speed_scale = 1.5
+script = ExtResource("23_4ni07")
+
+[node name="Hitbox" type="CollisionShape2D" parent="." unique_id=1591057825]
+position = Vector2(1, -1.25)
+shape = SubResource("RectangleShape2D_4ni07")
+disabled = true
+
+[connection signal="animation_finished" from="PlayerSprite" to="." method="_on_player_sprite_animation_finished"]
+[connection signal="start_hit_frames" from="PlayerSprite" to="." method="_on_player_sprite_start_hit_frames"]
+[connection signal="start_recovery_frames" from="PlayerSprite" to="." method="_on_player_sprite_start_recovery_frames"]
