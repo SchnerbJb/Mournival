@@ -70,6 +70,14 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 3.0,
+"texture": ExtResource("3_y4r1p")
+}],
+"loop": false,
+"name": &"parry",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_y4r1p")
 }],
@@ -189,7 +197,7 @@ shape = SubResource("RectangleShape2D_1bvp3")
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=1332148133]
 scale = Vector2(0.059, 0.059)
 sprite_frames = SubResource("SpriteFrames_ur7pv")
-animation = &"player_animation_b_attack"
+animation = &"parry"
 speed_scale = 1.5
 script = ExtResource("23_4ni07")
 

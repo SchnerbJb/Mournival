@@ -5,6 +5,10 @@
 [ext_resource type="Script" uid="uid://cixybgxauepaq" path="res://scripts/room_manager.gd" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://d1n4j8y1yhbgp" path="res://scripts/camera_2d.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://j4vsyjuv34i5" path="res://scenes/skeleton.tscn" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://gknojjc8vvi5" path="res://scripts/gui.gd" id="5_tefeu"]
+[ext_resource type="Texture2D" uid="uid://y2nlqwqimduo" path="res://assets/stamina_bar_under.png" id="6_tipki"]
+[ext_resource type="Texture2D" uid="uid://buyyq8lq7egnl" path="res://assets/stamina_bar_progress.png" id="7_85g3d"]
+[ext_resource type="Shader" uid="uid://xjfrxp7cvet2" path="res://shaders/staminabar.gdshader" id="8_ya4ey"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("2_sugp2")
@@ -22,6 +26,10 @@ tile_shape = 1
 tile_size = Vector2i(64, 48)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_jyhfs")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_trceg"]
+shader = ExtResource("8_ya4ey")
+shader_parameter/amplitude = 0.0
 
 [node name="World" type="Node2D" unique_id=1563526700]
 
@@ -46,16 +54,28 @@ max_range = 0.59
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1441443613]
 
 [node name="GUI" type="Node" parent="CanvasLayer" unique_id=707104952]
+script = ExtResource("5_tefeu")
 
 [node name="Button" type="Button" parent="CanvasLayer/GUI" unique_id=610190281]
-visible = false
-offset_right = 8.0
-offset_bottom = 8.0
+offset_top = 502.0
+offset_right = 80.0
+offset_bottom = 533.0
 text = "Generate"
+
+[node name="StaminaBar" type="TextureProgressBar" parent="CanvasLayer/GUI" unique_id=940609917]
+material = SubResource("ShaderMaterial_trceg")
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 257.0
+offset_bottom = 17.0
+value = 80.0
+texture_under = ExtResource("6_tipki")
+texture_progress = ExtResource("7_85g3d")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=582433441]
 position = Vector2(374, 228)
 zoom = Vector2(1.06, 1.06)
 script = ExtResource("4_jyhfs")
 
+[connection signal="stamina_change" from="Player" to="CanvasLayer/GUI" method="_on_player_stamina_change"]
 [connection signal="pressed" from="CanvasLayer/GUI/Button" to="RoomManager" method="_on_button_pressed"]

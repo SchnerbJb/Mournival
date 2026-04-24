@@ -1,7 +1,9 @@
 extends CharacterBody2D
 
-@export var hp: int = 10
-@export var stamina: int = 10
+signal stamina_change
+
+@export var hp: int = 100
+@export var stamina: int = 100
 @export var current_state: PlayerState = PlayerState.IDLE
 var run_speed = 350
 var animated_sprite: AnimatedSprite2D
@@ -14,10 +16,15 @@ func _ready() -> void:
 	animated_sprite = get_node("PlayerSprite")
 	
 
+func changeStamina(x: int):
+	stamina = clamp(stamina + x, 0, 100)
+	stamina_change.emit()
+
 func get_input() -> void:
 	if current_state != PlayerState.START_ATTACK \
 		and current_state != PlayerState.ATTACKING \
-		and current_state != PlayerState.END_ATTACK:
+		and current_state != PlayerState.END_ATTACK \
+		and current_state != PlayerState.PARRY:
 		var input_direction = Input.get_vector("left", "right", "up", "down")
 		velocity = input_direction * run_speed
 
@@ -27,24 +34,34 @@ func get_input() -> void:
 	if Input.is_action_just_pressed("first_ability"):
 		attack_one()
 
-func stop_before_attack():
+	if Input.is_action_just_pressed("special_ability"):
+		parry()
+
+func stop_new_state(new_state: PlayerState):
 	velocity = Vector2(0, 0)
-	current_state = PlayerState.START_ATTACK
+	current_state = new_state
 
 
 func attack_one() -> void:
-	stop_before_attack()
+	if stamina < 10:
+		return
+	stop_new_state(PlayerState.START_ATTACK)
 	animated_sprite.play(&"player_animation_b_attack")
 	var hit_box = Area2D.new()
 	add_child(hit_box)
+	changeStamina(-10)
+	
 
 func attack_two() -> void:
 	pass
 func attack_three() -> void:
 	pass
 func parry() -> void:
-	pass
-
+	if stamina < 10:
+		return
+	stop_new_state(PlayerState.PARRY)
+	animated_sprite.play(&"parry")
+	
 
 func get_animation_name(direction: PlayerDirection) -> StringName:
 	match (direction):
@@ -75,7 +92,8 @@ func _physics_process(_delta) -> void:
 func _process(_delta: float) -> void:
 	if current_state != PlayerState.START_ATTACK \
 		and current_state != PlayerState.ATTACKING \
-		and current_state != PlayerState.END_ATTACK:
+		and current_state != PlayerState.END_ATTACK \
+		and current_state != PlayerState.PARRY:
 		var animation_direction: PlayerDirection
 		if velocity.x > 0:
 			if velocity.y > 0:
@@ -114,7 +132,6 @@ func _on_player_sprite_start_hit_frames() -> void:
 
 func _on_player_sprite_start_recovery_frames() -> void:
 	current_state = PlayerState.END_ATTACK
-
 
 func _on_player_sprite_animation_finished() -> void:
 	current_state = PlayerState.IDLE
