@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://gknojjc8vvi5" path="res://scripts/gui.gd" id="5_tefeu"]
 [ext_resource type="Texture2D" uid="uid://y2nlqwqimduo" path="res://assets/stamina_bar_under.png" id="6_tipki"]
 [ext_resource type="Texture2D" uid="uid://buyyq8lq7egnl" path="res://assets/stamina_bar_progress.png" id="7_85g3d"]
-[ext_resource type="Shader" uid="uid://xjfrxp7cvet2" path="res://shaders/staminabar.gdshader" id="8_ya4ey"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
 texture = ExtResource("2_sugp2")
@@ -27,10 +26,6 @@ tile_size = Vector2i(64, 48)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_jyhfs")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_trceg"]
-shader = ExtResource("8_ya4ey")
-shader_parameter/amplitude = 0.0
-
 [node name="World" type="Node2D" unique_id=1563526700]
 
 [node name="Level1" type="TileMapLayer" parent="." unique_id=1631962008]
@@ -40,6 +35,8 @@ tile_set = SubResource("TileSet_tbgi4")
 
 [node name="Skeleton" parent="." unique_id=1113520282 instance=ExtResource("5_tbgi4")]
 position = Vector2(294, 170)
+collision_layer = 3
+collision_mask = 3
 gravity_scale = 0.0
 
 [node name="Player" parent="." unique_id=1218268725 instance=ExtResource("1_h2yge")]
@@ -57,13 +54,12 @@ max_range = 0.59
 script = ExtResource("5_tefeu")
 
 [node name="Button" type="Button" parent="CanvasLayer/GUI" unique_id=610190281]
-offset_top = 502.0
+offset_top = 616.0
 offset_right = 80.0
-offset_bottom = 533.0
+offset_bottom = 647.0
 text = "Generate"
 
 [node name="StaminaBar" type="TextureProgressBar" parent="CanvasLayer/GUI" unique_id=940609917]
-material = SubResource("ShaderMaterial_trceg")
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 257.0
@@ -73,7 +69,7 @@ texture_under = ExtResource("6_tipki")
 texture_progress = ExtResource("7_85g3d")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=582433441]
-position = Vector2(374, 228)
+position = Vector2(365, 208)
 zoom = Vector2(1.06, 1.06)
 script = ExtResource("4_jyhfs")
 
